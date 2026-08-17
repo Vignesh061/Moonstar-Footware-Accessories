@@ -1,19 +1,22 @@
 """
 Configuration classes for different environments.
-
 Loads sensitive values from environment variables via python-dotenv.
 """
 import os
 from dotenv import load_dotenv
 
-# Load .env file from the backend directory
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 
 class BaseConfig:
-    """Base configuration shared across all environments."""
     SECRET_KEY = os.getenv('SECRET_KEY', 'fallback-secret-key')
+
+    # JWT
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', 'fallback-jwt-secret')
+    # Default 7 days — long enough that tokens don't expire during normal use.
+    # Override in .env with JWT_ACCESS_TOKEN_EXPIRES=<seconds>
+    JWT_ACCESS_TOKEN_EXPIRES = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES', '604800'))
+    JWT_TOKEN_LOCATION = ['headers']
 
     # SQLAlchemy
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', '')
@@ -23,14 +26,14 @@ class BaseConfig:
         'pool_recycle': 300,
     }
 
-    # JWT
-    JWT_ACCESS_TOKEN_EXPIRES = 86400  # 24 hours in seconds
-    JWT_TOKEN_LOCATION = ['headers']
-
     # Supabase
     SUPABASE_URL = os.getenv('SUPABASE_URL', '')
     SUPABASE_KEY = os.getenv('SUPABASE_KEY', '')
+    SUPABASE_SERVICE_KEY = os.getenv('SUPABASE_SERVICE_KEY', '')
     SUPABASE_BUCKET = os.getenv('SUPABASE_BUCKET', 'product-images')
+
+    # Google OAuth (Customer login)
+    GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID', '')
 
     # OTP
     OTP_DEV_MODE = os.getenv('OTP_DEV_MODE', 'true').lower() == 'true'
@@ -41,13 +44,11 @@ class BaseConfig:
 
 
 class DevelopmentConfig(BaseConfig):
-    """Development environment configuration."""
     DEBUG = True
-    SQLALCHEMY_ECHO = True  # Log all SQL queries
+    SQLALCHEMY_ECHO = os.getenv('SQLALCHEMY_ECHO', 'false').lower() == 'true'
 
 
 class ProductionConfig(BaseConfig):
-    """Production environment configuration."""
     DEBUG = False
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_ENGINE_OPTIONS = {
@@ -58,12 +59,10 @@ class ProductionConfig(BaseConfig):
 
 
 class TestingConfig(BaseConfig):
-    """Testing environment configuration."""
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 
 
-# Map environment names to config classes
 config_map = {
     'development': DevelopmentConfig,
     'production': ProductionConfig,

@@ -1,0 +1,250 @@
+/* Admin Dashboard Styles */
+
+.admin-page {
+  max-width: 1200px;
+}
+
+.admin-page__header {
+  margin-bottom: 28px;
+}
+
+.admin-page__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1B2A4A;
+  margin-bottom: 4px;
+}
+
+.admin-page__subtitle {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.admin-loading {
+  padding: 60px;
+  text-align: center;
+  color: #888;
+  font-size: 1rem;
+}
+
+.admin-error {
+  padding: 16px;
+  color: #c0392b;
+  background: #fdf0ef;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+}
+
+/* KPI Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.kpi-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-top: 3px solid #ddd;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.kpi-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.kpi-card__icon {
+  font-size: 1.6rem;
+}
+
+.kpi-card__data {
+  display: flex;
+  flex-direction: column;
+}
+
+.kpi-card__value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1B2A4A;
+}
+
+.kpi-card__label {
+  font-size: 0.75rem;
+  color: #888;
+  font-weight: 500;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.dashboard-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.dashboard-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1B2A4A;
+  margin-bottom: 16px;
+}
+
+.dashboard-card__header .dashboard-card__title {
+  margin-bottom: 0;
+}
+
+.dashboard-card__view-all {
+  font-size: 0.8rem;
+  color: #C5983B;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.dashboard-card__empty {
+  color: #999;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 24px 0;
+}
+
+.dashboard-card__empty a {
+  color: #C5983B;
+}
+
+/* Table */
+.dashboard-card__table {
+  overflow-x: auto;
+}
+
+.dashboard-card__table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-card__table th {
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 12px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.dashboard-card__table td {
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  color: #333;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.dashboard-card__product-name {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stock-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stock-badge--low {
+  background: #fff3e0;
+  color: #e67e22;
+}
+
+.stock-badge--out {
+  background: #fde8e8;
+  color: #e74c3c;
+}
+
+/* Recent Products */
+.dashboard-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.recent-product {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+
+.recent-product:hover {
+  background: #f8f8f8;
+}
+
+.recent-product__img {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.recent-product__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.recent-product__name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-product__price {
+  font-size: 0.8rem;
+  color: #C5983B;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

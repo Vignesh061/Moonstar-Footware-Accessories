@@ -4,13 +4,264 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="MoonStar — Premium footwear & accessories for men, women, and kids. Browse, shop, and order without creating an account." />
+    <meta name="description" content="MoonStar — Premium footwear & accessories for men." />
     <meta name="theme-color" content="#F8F4EF" />
-    <title>Moonstar-Footware & Accessories </title>
+    <title>MoonStar — Men's Accessories</title>
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        background: #F8F4EF;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+      }
+
+      /* ── Splash overlay ── */
+      #app-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        /* Exact same cream as the logo background */
+        background: #F8F4EF;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        transition: opacity 0.6s ease, visibility 0.6s ease;
+      }
+
+      #app-splash.splash--hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      /* ── Logo ── */
+      .splash-logo-wrap {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: splash-float 3s ease-in-out infinite;
+      }
+
+      .splash-logo-wrap img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        display: block;
+        /* Animate the whole logo — gentle scale breathe */
+        animation: splash-breathe 2.4s ease-in-out infinite;
+      }
+
+      /* Rotating golden glow ring behind the logo */
+      .splash-glow-ring {
+        position: absolute;
+        inset: -18px;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 0deg,
+          transparent 0%,
+          rgba(197, 152, 59, 0.18) 25%,
+          rgba(212, 169, 77, 0.35) 50%,
+          rgba(197, 152, 59, 0.18) 75%,
+          transparent 100%
+        );
+        animation: splash-ring-spin 3s linear infinite;
+        filter: blur(6px);
+      }
+
+      /* Star sparkle — sits top-right matching the logo star position */
+      .splash-star {
+        position: absolute;
+        top: 30px;
+        right: 28px;
+        width: 28px;
+        height: 28px;
+        animation: splash-star-twinkle 1.6s ease-in-out infinite;
+      }
+
+      .splash-star::before,
+      .splash-star::after {
+        content: '';
+        position: absolute;
+        background: #C5983B;
+        border-radius: 2px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* Vertical bar of the star */
+      .splash-star::before {
+        width: 3px;
+        height: 28px;
+      }
+
+      /* Horizontal bar of the star */
+      .splash-star::after {
+        width: 28px;
+        height: 3px;
+      }
+
+      /* Four diagonal tips */
+      .splash-star-inner {
+        position: absolute;
+        inset: 0;
+        transform: rotate(45deg);
+      }
+
+      .splash-star-inner::before,
+      .splash-star-inner::after {
+        content: '';
+        position: absolute;
+        background: #C5983B;
+        border-radius: 2px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .splash-star-inner::before {
+        width: 3px;
+        height: 18px;
+      }
+
+      .splash-star-inner::after {
+        width: 18px;
+        height: 3px;
+      }
+
+      /* ── Brand text ── */
+      .splash-brand {
+        margin-top: 4px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        animation: splash-fade-up 0.6s ease 0.3s both;
+      }
+
+      .splash-brand__name {
+        font-size: 1.9rem;
+        font-weight: 800;
+        letter-spacing: 0.2em;
+        color: #1B2A4A;
+        text-transform: uppercase;
+      }
+
+      .splash-brand__tagline {
+        font-size: 0.72rem;
+        letter-spacing: 0.28em;
+        color: #8C9AAD;
+        text-transform: uppercase;
+      }
+
+      /* ── Gold shimmer progress bar ── */
+      .splash-progress-track {
+        margin-top: 32px;
+        width: 160px;
+        height: 2px;
+        background: rgba(197, 152, 59, 0.15);
+        border-radius: 2px;
+        overflow: hidden;
+        animation: splash-fade-up 0.6s ease 0.5s both;
+      }
+
+      .splash-progress-fill {
+        height: 100%;
+        width: 0%;
+        border-radius: 2px;
+        background: linear-gradient(90deg, #A67C2E, #C5983B, #D4A94D, #C5983B);
+        background-size: 200% 100%;
+        animation:
+          splash-bar-grow 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+          splash-bar-shine 1s linear infinite;
+      }
+
+      /* ── Keyframes ── */
+
+      /* Logo gently floats up and down */
+      @keyframes splash-float {
+        0%, 100% { transform: translateY(0px); }
+        50%       { transform: translateY(-8px); }
+      }
+
+      /* Logo breathes (subtle scale) */
+      @keyframes splash-breathe {
+        0%, 100% { transform: scale(1); }
+        50%       { transform: scale(1.03); }
+      }
+
+      /* Glow ring spins */
+      @keyframes splash-ring-spin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+
+      /* Star twinkles — scale + opacity */
+      @keyframes splash-star-twinkle {
+        0%, 100% { transform: scale(1) rotate(0deg);   opacity: 0.7; }
+        30%       { transform: scale(1.5) rotate(15deg); opacity: 1;   }
+        60%       { transform: scale(0.8) rotate(-10deg); opacity: 0.5; }
+      }
+
+      /* Text/bar fade up on entry */
+      @keyframes splash-fade-up {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Progress bar fills */
+      @keyframes splash-bar-grow {
+        0%   { width: 0%; }
+        60%  { width: 70%; }
+        100% { width: 100%; }
+      }
+
+      /* Shimmer moves across the bar */
+      @keyframes splash-bar-shine {
+        0%   { background-position: 200% center; }
+        100% { background-position: -200% center; }
+      }
+    </style>
   </head>
+
   <body>
+    <!-- ── Splash screen ── -->
+    <div id="app-splash" role="status" aria-label="Loading MoonStar">
+
+      <div class="splash-logo-wrap">
+        <!-- Spinning glow ring behind logo -->
+        <div class="splash-glow-ring"></div>
+
+        <!-- The actual logo (cream bg matches splash bg so it's seamless) -->
+        <img src="/logo.png" alt="MoonStar" />
+
+        <!-- Extra animated star that sits over the logo's star position -->
+        <div class="splash-star" aria-hidden="true">
+          <div class="splash-star-inner"></div>
+        </div>
+      </div>
+
+      <!-- Brand name sits below logo exactly as on the logo itself -->
+      <div class="splash-brand">
+        <span class="splash-brand__name">MoonStar</span>
+        <span class="splash-brand__tagline">Footwear &amp; Accessories</span>
+      </div>
+
+      <!-- Thin gold progress bar -->
+      <div class="splash-progress-track" aria-hidden="true">
+        <div class="splash-progress-fill"></div>
+      </div>
+
+    </div>
+
+    <!-- ── React root ── -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
-
