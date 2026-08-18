@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://moonstar-footware-accessories.onrender.com*"
+      "destination": "https://moonstar-footware-accessories.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
